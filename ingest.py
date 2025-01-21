@@ -10,8 +10,8 @@ key = sys.argv[2]
 topic = sys.argv[3]
 
 producer = KafkaProducer(bootstrap_servers='localhost:9092', value_serializer=lambda x: json.dumps(x).encode('utf-8'))
-dt = pd.to_datetime('2024-02-29')
-while dt < pd.to_datetime('2024-12-31'):
+dt = pd.to_datetime('today') - 365
+while dt < pd.to_datetime('today'):
   dt = dt + pd.Timedelta(days=1)
   dt_string = dt.strftime('%Y-%m-%d')
   address = server + '?key=' + key + '&q=Donetsk' + '&dt=' + dt_string + '&end_dt=' + dt_string
