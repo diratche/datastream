@@ -20,4 +20,4 @@ while dt < pd.to_datetime('2024-12-31'):
     data = data.json()
     for daily_forecast in data:
       producer.send(topic, value=daily_forecast)
-      print(f'Weather forecast successfully retrieved for {dt_string}')
+      print(daily_forecast)
