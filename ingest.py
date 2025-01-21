@@ -18,4 +18,4 @@ while dt < pd.to_datetime('today'):
   data = requests.get(address)
   if data.status_code == 200:
     data = data.json()
-    print(data[forecast])
+    print(data)
