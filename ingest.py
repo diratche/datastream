@@ -10,7 +10,7 @@ key = sys.argv[2]
 topic = sys.argv[3]
 
 producer = KafkaProducer(bootstrap_servers='localhost:9092', value_serializer=lambda x: json.dumps(x).encode('utf-8'))
-dt = pd.to_datetime('today') - 365
+dt = pd.to_datetime('today') - pd.Timedelta(days=365)
 while dt < pd.to_datetime('today'):
   dt = dt + pd.Timedelta(days=1)
   dt_string = dt.strftime('%Y-%m-%d')
