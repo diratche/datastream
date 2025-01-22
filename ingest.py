@@ -4,6 +4,7 @@ import json
 import time
 import sys
 import pandas as pd
+import numpy as np
 
 key = sys.argv[1]
 topic = sys.argv[2]
@@ -44,7 +45,5 @@ while True:
       data['forecast']['oblast'] = oblast
       total_battles = int(totals.loc[oblast])
       daily_battles = int(df.loc[(df['datetime'] == dt) & (df['admin1'] == oblast), 'event_type'].count())
-      target = daily_battles / total_battles
+      target = np.log(daily_battles / total_battles)
       data['forecast']['target'] = target
-      print(data['forecast'])
-      print(daily_battles, total_battles, f'{target:.8f}')
