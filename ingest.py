@@ -43,7 +43,7 @@ while True:
       data = data.json()
       data['forecast']['oblast'] = oblast
       total_battles = int(totals.loc[oblast])
-      daily_battles = int(df_new.loc[(df_new['datetime'] == dt) & (df_new['admin1'] == oblast), 'event_type'].count())
+      daily_battles = int(df.loc[(df_new['datetime'] == dt) & (df['admin1'] == oblast), 'event_type'].count())
       target = daily_battles / total_battles
       data['forecast']['target'] = target
       print(data['forecast'])
