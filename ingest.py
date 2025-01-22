@@ -18,6 +18,14 @@ oblasts = ['Donetsk',
             'Kherson',
             #'Sumy',
           ]
+df = pd.read_csv('2024-01-01-2025-01-22-Russia-Ukraine.csv', on_bad_lines='warn')
+df.loc[df['admin1']=='Zaporizhia', 'admin1'] = 'Zaporizhzhya'
+df['datetime'] = pd.to_datetime(df['event_date'])
+df = df.loc[df['event_type'].isin(['Battles'])]
+df = df.loc[df['country'].isin(['Ukraine'])]
+df = df.loc[df['admin1'].isin(oblasts)]
+df = df[['datetime', 'admin1', 'event_type']]
+totals = df.groupby('admin1').count()['event_type']
 ob_id = len(oblasts) - 1
 while True:
   if ob_id == len(oblasts) - 1:
@@ -34,4 +42,8 @@ while True:
     if data.status_code == 200:
       data = data.json()
       data['forecast']['oblast'] = oblast
+      total_battles = int(totals.loc[oblast])
+      daily_battles = int(df_new.loc[(df_new['datetime'] == dt) & (df_new['admin1'] == oblast), 'event_type'].count())
+      target = daily_battles / total_battles
+      data['forecast']['target'] = target
       print(data['forecast'])
