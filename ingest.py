@@ -47,3 +47,4 @@ while True:
       target = daily_battles / total_battles
       data['forecast']['target'] = target
       print(data['forecast'])
+      print(f'{target:.8f}')
