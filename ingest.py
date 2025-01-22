@@ -4,7 +4,6 @@ import json
 import time
 import sys
 import pandas as pd
-import numpy as np
 
 key = sys.argv[1]
 topic = sys.argv[2]
@@ -19,6 +18,7 @@ oblasts = ['Donetsk',
             'Kherson',
             #'Sumy',
           ]
+
 df = pd.read_csv('2024-01-01-2025-01-22-Russia-Ukraine.csv', on_bad_lines='warn')
 df.loc[df['admin1']=='Zaporizhia', 'admin1'] = 'Zaporizhzhya'
 df['datetime'] = pd.to_datetime(df['event_date'])
@@ -27,6 +27,7 @@ df = df.loc[df['country'].isin(['Ukraine'])]
 df = df.loc[df['admin1'].isin(oblasts)]
 df = df[['datetime', 'admin1', 'event_type']]
 totals = df.groupby('admin1').count()['event_type']
+
 ob_id = len(oblasts) - 1
 while True:
   if ob_id == len(oblasts) - 1:
@@ -42,8 +43,23 @@ while True:
     data = requests.get(address)
     if data.status_code == 200:
       data = data.json()
-      data['forecast']['oblast'] = oblast
+      output = {}
+                
+      output['oblast'] = oblast
+                
       total_battles = int(totals.loc[oblast])
       daily_battles = int(df.loc[(df['datetime'] == dt) & (df['admin1'] == oblast), 'event_type'].count())
-      target = np.log(daily_battles / total_battles)
-      data['forecast']['target'] = target
+      output['target'] = daily_battles / total_battles
+
+      output['features']['temperature'] = data['forecast']['forecastday'][0]['day']['avgtemp_c']
+      output['features']['wind'] = data['forecast']['forecastday'][0]['day']['maxwind_kph']
+      output['features']['precipitation'] = data['forecast']['forecastday'][0]['day']['totalprecip_mm']
+      output['features']['snow'] = data['forecast']['forecastday'][0]['day']['totalsnow_cm']
+      output['features']['visibility'] = data['forecast']['forecastday'][0]['day']['avgvis_km']
+      output['features']['moon'] = data['forecast']['forecastday'][0]['astro']['moon_illumination']
+      sunrise_str = data['forecast']['forecastday'][0]['astro']['sunrise']
+      sunset_str = data['forecast']['forecastday'][0]['astro']['sunset']
+      sunrise = datetime.strptime(sunrise_str, "%I:%M %p")
+      sunset = datetime.strptime(sunset_str, "%I:%M %p")
+      output['features']['sunrise'] = (sunrise.hour + sunrise.minute / 60) / 12
+      output['features']['sunset'] = (sunset.hour + sunset.minute / 60 - 12) / 12
