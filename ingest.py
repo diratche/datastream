@@ -4,6 +4,7 @@ import json
 import time
 import sys
 import pandas as pd
+from datetime import datetime
 
 key = sys.argv[1]
 topic = sys.argv[2]
