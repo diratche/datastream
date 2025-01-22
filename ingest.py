@@ -63,8 +63,9 @@ while True:
       sunset_str = data['forecast']['forecastday'][0]['astro']['sunset']
       sunrise = datetime.strptime(sunrise_str, "%I:%M %p")
       sunset = datetime.strptime(sunset_str, "%I:%M %p")
-      output['features']['sunrise'] = (sunrise.hour + sunrise.minute / 60) / 12
-      output['features']['sunset'] = (sunset.hour + sunset.minute / 60 - 12) / 12
+      sunrise = sunrise.hour + sunrise.minute / 60
+      sunset = sunset.hour + sunset.minute / 60
+      output['features']['daylength'] = sunset - sunrise
 
       producer.send(topic, value=output)
       print(output)
