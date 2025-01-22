@@ -5,10 +5,10 @@ import time
 import sys
 import pandas as pd
 
-server = sys.argv[1]
-key = sys.argv[2]
-topic = sys.argv[3]
+key = sys.argv[1]
+topic = sys.argv[2]
 
+server = 'https://api.weatherapi.com/v1/history.json'
 producer = KafkaProducer(bootstrap_servers='localhost:9092', value_serializer=lambda x: json.dumps(x).encode('utf-8'))
 oblasts = ['Donetsk',
             'Luhansk',
