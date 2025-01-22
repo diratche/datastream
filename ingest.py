@@ -25,7 +25,7 @@ while True:
     ob_id += 1
   oblast = oblasts[ob_id]
   dt = pd.to_datetime('today') - pd.Timedelta(days=365)
-  while dt < pd.to_datetime('today'):
+  while dt < pd.to_datetime('2025-01-22'):
     dt = dt + pd.Timedelta(days=1)
     dt_string = dt.strftime('%Y-%m-%d')
     address = server + '?key=' + key + '&q=' + oblast + '&dt=' + dt_string + '&end_dt=' + dt_string
