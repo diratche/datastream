@@ -12,11 +12,12 @@ server = 'https://api.weatherapi.com/v1/history.json'
 producer = KafkaProducer(bootstrap_servers='localhost:9092', value_serializer=lambda x: json.dumps(x).encode('utf-8'))
 oblasts = ['Donetsk',
             'Luhansk',
-            'Dnipropetrovsk',
+            #'Dnipropetrovsk',
             'Zaporizhzhya',
             'Kharkiv',
-            'Kherson',
-            'Sumy',]
+            #'Kherson',
+            #'Sumy',
+          ]
 ob_id = len(oblasts) - 1
 while True:
   if ob_id == len(oblasts) - 1:
