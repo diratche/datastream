@@ -52,6 +52,7 @@ while True:
       daily_battles = int(df.loc[(df['datetime'] == dt) & (df['admin1'] == oblast), 'event_type'].count())
       output['target'] = daily_battles / total_battles
 
+      output['features'] = {}
       output['features']['temperature'] = data['forecast']['forecastday'][0]['day']['avgtemp_c']
       output['features']['wind'] = data['forecast']['forecastday'][0]['day']['maxwind_kph']
       output['features']['precipitation'] = data['forecast']['forecastday'][0]['day']['totalprecip_mm']
