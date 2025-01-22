@@ -15,7 +15,7 @@ oblasts = ['Donetsk',
             #'Dnipropetrovsk',
             'Zaporizhzhya',
             'Kharkiv',
-            #'Kherson',
+            'Kherson',
             #'Sumy',
           ]
 ob_id = len(oblasts) - 1
