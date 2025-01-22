@@ -40,7 +40,7 @@ while True:
   while dt < pd.to_datetime('2025-01-22'):
     dt += pd.Timedelta(days=1)
     dt_string = dt.strftime('%Y-%m-%d')
-    address = server + '?key=' + key + '&q=' + oblast + '&dt=' + dt_string + '&end_dt=' + dt_string
+    address = server + '?key=' + key + '&q=' + oblast + ',Ukraine' + '&dt=' + dt_string + '&end_dt=' + dt_string
     data = requests.get(address)
     if data.status_code == 200:
       data = data.json()
