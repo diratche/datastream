@@ -64,3 +64,6 @@ while True:
       sunset = datetime.strptime(sunset_str, "%I:%M %p")
       output['features']['sunrise'] = (sunrise.hour + sunrise.minute / 60) / 12
       output['features']['sunset'] = (sunset.hour + sunset.minute / 60 - 12) / 12
+
+      producer.send(topic, value=output)
+      print(output)
