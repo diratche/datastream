@@ -2,7 +2,7 @@ consumer = KafkaConsumer('data-ingestion', bootstrap_servers='localhost:9092', g
 producer = KafkaProducer('predictions', bootstrap_servers='localhost:9092', group_id='predictions', value_deserializer=lambda x: json.loads(x.decode('utf-8')))
 id = -2
 for x, y, oblast in stream(consumer):
-    if id >= max_instances:
+    if False:
         consumer.close()
         break
     else:
